@@ -6,15 +6,17 @@ public class BankAccount {
 	private int pin;
 	private double balance;
 	
-	BankAccount(int accountNumber, String accountHolderderName, int pin, double balance) {
+	public BankAccount(int accountNumber, String accountHolderderName, int pin, double balance) {
 		this.accountNumber = accountNumber;
 		this.accountHolderName = accountHolderderName;
 		this.balance = balance;
 		this.pin = pin;
 	}
 	
-	 boolean enteredPin(int enteredPin) {
-		if(enteredPin == pin) {
+	
+	
+	 boolean login(int enteredAccountNumber, int enteredPin) {
+		if(enteredPin == pin && enteredAccountNumber == accountNumber) {
 			return true;
 		}
 		return false;
@@ -43,7 +45,7 @@ public class BankAccount {
 			System.out.println("Amount Withdrawn Successfully");
 			System.out.println("Updated Balance: " + balance);
 		}
-		else if(balance <= amount){
+		else if(balance < amount){
 			System.out.println("Insufficient Balance");
 		} else {
 			System.out.println("Invalid Withdrawal Amount");
@@ -56,7 +58,31 @@ public class BankAccount {
 		System.out.println("Account Holder Name: " + accountHolderName);
 	}
 	
+	int getAccountNumber() {
+		return accountNumber;
+	}
 	
+	void recieveAmount(double amount) {
+		if(amount > 0) {
+			balance += amount;
+		}
+	}
+	
+	void transferAmount(BankAccount receiver, double amount) {
+		if(amount <= 0) {
+			System.out.println("Invalid Transfer Amount");
+		} else if(balance < amount) {
+			System.out.println("Insufficient Balance");
+		} 
+		else {
+			balance -= amount;
+			receiver.recieveAmount(amount);
+			
+			System.out.println("Transfer Successful");
+			System.out.println("Amount Transferred: " + amount);
+			System.out.println("Updated Balance: " + balance);
+		}
+	}
 	
 		
 	
